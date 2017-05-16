@@ -1,0 +1,20 @@
+import { Meteor } from 'meteor/meteor';
+import ReactDOM from 'react-dom';
+import { Tracker } from 'meteor/tracker';
+import { Session } from 'meteor/session';
+
+import { routes, onAuthChange } from '../imports/routes/routes';
+import '../imports/startup/simple-schema-configuration';
+
+Tracker.autorun(() => {
+  const isAuthenticated = !!Meteor.userId();
+  onAuthChange(isAuthenticated);
+});
+
+import React from 'react';
+
+Meteor.startup(() => {
+  Session.set('showVisible', true);
+  ReactDOM.render(routes, document.getElementById('app'));
+  // ReactDOM.render(<MyComponent name="Mike" />, document.getElementById('app'));
+});
